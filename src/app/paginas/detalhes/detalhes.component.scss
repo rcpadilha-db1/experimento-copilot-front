@@ -1,0 +1,18 @@
+.acao {
+
+    &__header {
+        .negativo {
+            color: red;
+        }
+
+        .positivo {
+            color: green;
+        }
+    }
+    &__valores {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 24px;
+    }
+}

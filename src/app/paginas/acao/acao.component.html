@@ -1,0 +1,50 @@
+<div class="acao">
+  <div class="acao__filtro">
+    <form [formGroup]="formulario" (submit)="pesquisar()">
+      <mat-form-field appearance="outline">
+        <mat-label>Pesquise por nome ou símbolo</mat-label>
+        <input
+          matInput
+          placeholder="Pesquise por nome ou símbolo"
+          formControlName="search"
+        />
+      </mat-form-field>
+
+      <button class="btn-primary">Pesquisar</button>
+    </form>
+  </div>
+
+  <div class="acao__tabela" *ngIf="dataSource?.data?.length">
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="full-width-table table-container"
+    >
+      <ng-container matColumnDef="symbol">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Símbolo</mat-header-cell
+        >
+        <mat-cell *matCellDef="let acao"
+          ><a routerLink="{{acao.symbol}}">{{ acao.symbol }}</a></mat-cell
+        >
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Nome</mat-header-cell
+        >
+        <mat-cell *matCellDef="let acao">{{ acao.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef mat-sort-header
+          >Tipo</mat-header-cell
+        >
+        <mat-cell *matCellDef="let acao">{{ acao.type }}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayColumns"></mat-header-row>
+      <mat-row *matRowDef="let acao; columns: displayColumns"></mat-row>
+    </mat-table>
+  </div>
+</div>

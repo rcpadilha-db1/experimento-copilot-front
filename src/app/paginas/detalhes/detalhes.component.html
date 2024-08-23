@@ -1,0 +1,56 @@
+<div class="acao">
+  <div class="acao__header">
+    <h1 class="acao__header--tiulo">{{ acao.ticker }} - {{ acao.name }}</h1>
+    <span class="acao__header--variacao {{variacaoPreco(acao.day_change)}}">
+    {{ acao.day_change }} %
+    </span>
+  </div>
+  <div class="acao__valores">
+    <div class="acao__valores--detalhres">
+      <h1>
+        {{formatacaoDeMoeda(acao.currency)}} {{ acao.price }}
+      </h1>
+      <p>Valor Atual</p>
+    </div>
+    <div class="acao__valores--detalhres">
+      <h1>
+        {{formatacaoDeMoeda(acao.currency)}} {{ acao.day_high }}
+      </h1>
+      <p>Maior Valor Hoje</p>
+    </div>
+    <div class="acao__valores--detalhres">
+      <h1>
+        {{formatacaoDeMoeda(acao.currency)}} {{ acao.day_low }}
+      </h1>
+      <p>Menor Valor Hoje</p>
+    </div>
+    <div class="acao__valores--detalhres">
+      <h1>
+        {{formatacaoDeMoeda(acao.currency)}} {{ acao.previous_close_price }}
+      </h1>
+      <p>Último Fechamento</p>
+    </div>
+  </div>
+  <hr>
+  <div class="acao__valores">
+    <div class="acao__valores--detalhres">
+      <h1>
+        {{formatacaoDeMoeda(acao.currency)}} {{acao['52_week_high']}}
+      </h1>
+      <p>Maior Valor</p>
+    </div>
+
+    <div class="acao__valores--detalhres">
+        <h1>
+          {{formatacaoDeMoeda(acao.currency)}} {{acao['52_week_low']}}
+        </h1>
+        <p>Menor Valor</p>
+      </div>
+  </div>
+
+  <div class="acao_bbotoes">
+    <a routerLink="/acao"><button class="btn-primary">
+        Voltar
+    </button></a>
+  </div>
+</div>

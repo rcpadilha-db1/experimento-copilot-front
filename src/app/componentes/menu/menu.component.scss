@@ -1,0 +1,19 @@
+.menu {
+    background-color: black;
+    color: white;
+    padding-left: 10%;
+    padding-right: 10%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    &__titulo {
+        color: white;
+    }
+
+    nav {
+        a, button {
+            color: white;
+        }
+    }
+}

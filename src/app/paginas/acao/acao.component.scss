@@ -1,0 +1,14 @@
+.acao {
+    &__filtro {
+        form {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
+        gap: 8px;
+    }
+    }
+
+    &__tabela {
+        margin-bottom: 5%;
+    }
+}
