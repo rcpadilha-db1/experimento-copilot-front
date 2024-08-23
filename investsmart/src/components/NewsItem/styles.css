@@ -1,0 +1,28 @@
+.news-item {
+  border-top: 1px solid #ccc;
+  padding: 15px 0;
+}
+
+.news-item h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.news-item span {
+  display: block;
+  color: #777;
+  margin: 5px 0;
+}
+
+.news-item p {
+  margin: 10px 0;
+}
+
+.news-item a {
+  text-decoration: none;
+  color: #3498db;
+}
+
+.news-item a:hover {
+  text-decoration: underline;
+}
