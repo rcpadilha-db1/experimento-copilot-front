@@ -9,7 +9,7 @@ import './index.css';
 export const Detalhes = () => {
   const { id } = useParams<{ id: string }>();
   const { data, loading, error } = useApi<IAcao[]>(
-    `https://api.stockdata.org/v1/data/quote?symbols=${id}&api_token=${import.meta.env.VITE_API_TOKEN}`,
+    `data/quote?symbols=${id}`,
     'get'
   );
   const acao = data?.[0];

@@ -9,7 +9,7 @@ export const Inicio = () => {
     loading,
     error,
   } = useApi<INotificia[]>(
-    `https://api.stockdata.org/v1/news/all?language=en&api_token=${import.meta.env.VITE_API_TOKEN}`,
+    `news/all?language=en`,
     'get'
   );
 

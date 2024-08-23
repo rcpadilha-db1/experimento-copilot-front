@@ -6,14 +6,9 @@ import './index.css';
 import { IAcao } from '../../interfaces/acoes';
 
 export const Acoes = () => {
-  const [search, setSearch] = useState('tsla');
-  const {
-    data: acoes,
-    loading,
-    error,
-    refetch,
-  } = useApi<IAcao[]>(
-    `https://api.stockdata.org/v1/entity/search?search=${search}&api_token=fPoUXP2H3g699dYZSzddXgPIYbTpC9AoZVISwg0K`,
+  const [search, setSearch] = useState('');
+  const { data:acoes, loading, error, refetch } = useApi<IAcao[]>(
+    `entity/search?search=${search}`,
     'get'
   );
 
