@@ -1,0 +1,15 @@
+.noticia {
+  width: 100%;
+  padding: 16px 0;
+}
+
+.noticia:not(:last-child) {
+  border-bottom: 2px solid #e0e0e0;
+}
+.noticia h4 {
+  text-transform: capitalize;
+}
+
+.noticia p {
+  margin-bottom: 8px;
+}

@@ -1,0 +1,17 @@
+.acoes-container {
+  padding: 0 20%;
+}
+
+.acoes-search {
+  display: flex;
+  gap: 16px;
+  margin: 45px 0;
+}
+
+.acoes-input {
+  width: 50%;
+}
+
+.acoes-button {
+  width: 180px;
+}

@@ -1,0 +1,42 @@
+.main {
+  padding: 0 20%;
+}
+
+.error {
+  color: red;
+}
+
+.loading {
+  color: blue;
+}
+
+.acao,
+.acao-btn {
+  margin-top: 16px;
+}
+
+.acao h3 {
+  color: inherit;
+}
+
+.acao h3.green {
+  color: green;
+}
+
+.acao h3.red {
+  color: red;
+}
+
+.acao-last_year {
+  margin-bottom: 8px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-top: 16px;
+}
+
+.hr {
+  margin-top: 16px;
+}

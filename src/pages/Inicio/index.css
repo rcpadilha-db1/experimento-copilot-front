@@ -1,0 +1,16 @@
+.noticias {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20%;
+  margin: 0 auto;
+}
+.noticias h3 {
+  text-align: left;
+  font-weight: lighter;
+}
+
+.noticias_items {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
