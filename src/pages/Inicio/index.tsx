@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useApi } from '../../hooks/useApi';
 import { INotificia } from '../../interfaces/noticias';
 import { Noticia } from './components/Noticia';
@@ -8,10 +9,15 @@ export const Inicio = () => {
     data: noticias,
     loading,
     error,
+    fetch
   } = useApi<INotificia[]>(
     `news/all?language=en`,
     'get'
   );
+
+  useEffect(() => {
+    fetch()
+  },[])
 
   return (
     <div className="noticias">

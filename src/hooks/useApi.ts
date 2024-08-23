@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Api } from '../core/api';
 import { FetchHttpClient } from '../external/FetchHttpClient';
 
@@ -9,11 +9,9 @@ export const useApi = <T>(
   method: 'get' | 'post' | 'delete',
   body?: unknown
 ) => {
-    console.log(import.meta.env.VITE_API_URL);
-    
   const urlBase = `${import.meta.env.VITE_API_URL}/${url}&api_token=${import.meta.env.VITE_API_TOKEN}`;
   const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const fetchData = async (): Promise<void> => {
     setLoading(true);
@@ -35,9 +33,7 @@ export const useApi = <T>(
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  return { data, loading, error, refetch: fetchData };
+
+  return { data, loading, error, fetch: fetchData };
 };

@@ -7,9 +7,9 @@ import { IAcao } from '../../interfaces/acoes';
 
 export const Acoes = () => {
   const [search, setSearch] = useState('');
-  const { data:acoes, loading, error, refetch } = useApi<IAcao[]>(
+  const { data:acoes, loading, error, fetch } = useApi<IAcao[]>(
     `entity/search?search=${search}`,
-    'get'
+    'get',
   );
 
   const handleSearchChange = (value: string) => {
@@ -26,7 +26,7 @@ export const Acoes = () => {
         />
         <Button
           className="acoes-button"
-          onClick={refetch}
+          onClick={fetch}
           disabled={!search.length}
         >
           Pesquisar

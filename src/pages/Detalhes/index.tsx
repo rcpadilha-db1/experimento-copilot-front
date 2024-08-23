@@ -1,18 +1,24 @@
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useApi } from '../../hooks/useApi';
 import { IAcao } from '../../interfaces/acoes';
 import { addSignal } from './detalhes.helper';
 import { Button } from 'rsuite';
 import { PriceDescription } from './components/PriceDescription';
 import './index.css';
+import { useEffect } from 'react';
 
 export const Detalhes = () => {
   const { id } = useParams<{ id: string }>();
-  const { data, loading, error } = useApi<IAcao[]>(
+  const navigate=  useNavigate()
+  const { data, loading, error,fetch } = useApi<IAcao[]>(
     `data/quote?symbols=${id}`,
     'get'
   );
   const acao = data?.[0];
+
+  useEffect(() => {
+    fetch()
+  },[])
 
   return (
     <main className="main">
@@ -56,7 +62,9 @@ export const Detalhes = () => {
           </div>
         </div>
       )}
-      <Button className="acao-btn" as={Link} to={'..'}>
+      <Button className="acao-btn" onClick={()=>{
+        navigate(-1)
+      }}>
         Voltar
       </Button>
     </main>
