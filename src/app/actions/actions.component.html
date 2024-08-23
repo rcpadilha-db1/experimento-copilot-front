@@ -1,0 +1,40 @@
+<div class="actions-content">
+  <form [formGroup]="actionsForm">
+    <div>
+      <input
+        class="search-input"
+        formControlName="action"
+        placeholder="Pesquise por nome ou simbolo"
+        aria-label="Search through site content"
+      />
+      <button mat-flat-button (click)="handleSearchClick()">Search</button>
+    </div>
+  </form>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    *ngIf="stockList?.length"
+    class="table"
+  >
+    <ng-container matColumnDef="symbol">
+      <th mat-header-cell *matHeaderCellDef>Simbolo</th>
+      <td mat-cell *matCellDef="let element">
+        <a [routerLink]="'/details/' + element.symbol">{{ element.symbol }}</a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Nome</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>Tipo</th>
+      <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

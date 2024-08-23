@@ -1,0 +1,40 @@
+.home-content {
+  padding: 40px 240px;
+
+  .sub-title {
+    font-weight: normal;
+    margin-bottom: 40px;
+  }
+
+  .news-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    .news-list-item {
+      display: flex;
+      flex-direction: column;
+
+      .news-title {
+        font-weight: bold;
+        margin-bottom: 8px;
+
+      }
+
+      .news-publish-date {
+        font-style: italic;
+        margin-bottom: 16px;
+      }
+
+      .news-snippet {
+        margin-bottom: 12px;
+      }
+    }
+  }
+
+}
+
+.divider {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}

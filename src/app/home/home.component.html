@@ -1,0 +1,16 @@
+<div class="home-content">
+  <h3 class="sub-title">Últimas Noticias</h3>
+  <ul class="news-list">
+    <ng-container *ngFor="let news of newsList; let isLast = last">
+      <li class="news-list-item">
+        <span class="news-title">{{ news.title }}</span>
+        <span class="news-publish-date">{{
+          formatPublishDate(news.published_at)
+        }}</span>
+        <span class="news-snippet">{{ news.snippet }}</span>
+        <a [href]="news.url">Ver notícia</a>
+      </li>
+      <hr class="divider" *ngIf="!isLast" />
+    </ng-container>
+  </ul>
+</div>

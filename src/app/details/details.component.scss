@@ -1,0 +1,32 @@
+.stock-info-container {
+  padding: 40px 240px;
+}
+
+.grid-values {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.values {
+  display: flex;
+  flex-direction: column;
+
+  .value {
+    font-size: 23px;
+    font-weight: bold;
+    margin: 0;
+  }
+}
+
+.divider {
+  margin-top: 40px;
+}
+
+.positive {
+  color: rgb(61, 188, 61);
+}
+
+.negative {
+  color: rgb(233, 87, 87);
+}

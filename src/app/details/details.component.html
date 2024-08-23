@@ -1,0 +1,39 @@
+<div class="stock-info-container" *ngIf="!!stockInfo">
+  <h2>{{ symbol }} - {{ stockInfo.name }}</h2>
+  <p [ngClass]="isPositive(stockInfo.day_change) ? 'positive' : 'negative'">
+    {{ stockInfo.day_change }}%
+  </p>
+  <div class="grid-values">
+    <div class="values">
+      <p class="value">${{ stockInfo.price }}</p>
+      <p>Valor Atual</p>
+    </div>
+
+    <div class="values">
+      <p class="value">${{ stockInfo.day_high }}</p>
+      <p>Maior valor hoje</p>
+    </div>
+
+    <div class="values">
+      <p class="value">${{ stockInfo.day_low }}</p>
+      <p>Menor valor hoje</p>
+    </div>
+    <div class="values">
+      <p class="value">${{ stockInfo.previous_close_price }}</p>
+      <p>Ultimo fechamento</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <div class="grid-values">
+    <div class="values">
+      <p class="value">${{ stockInfo["52_week_high"] }}</p>
+      <p>Maior valor</p>
+    </div>
+    <div class="values">
+      <p class="value">${{ stockInfo["52_week_low"] }}</p>
+      <p>Menor valor</p>
+    </div>
+  </div>
+</div>
