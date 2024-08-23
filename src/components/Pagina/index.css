@@ -1,0 +1,39 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}   
+
+.pagina {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: end;
+  background-color: gray;
+  height: 100px;
+  margin: 0 0 20px 0;
+}
+
+h2 {
+   margin-right: 50%;
+    color:white
+}
+.links{
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    margin-right: 20%;
+}
+
+.dados{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+a {
+    color: white;
+    margin-right: 10px;
+    font-weight: bold;
+}
