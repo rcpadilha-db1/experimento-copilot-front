@@ -9,6 +9,7 @@
       v-for="item in news"
       :key="item.uuid"
       class="px-0"
+      data-testid="news-item"
     >
       <v-col cols="12">
         <div>

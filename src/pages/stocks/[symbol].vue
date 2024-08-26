@@ -70,7 +70,7 @@
 <script lang="ts" setup>
 import favoriteStocksService from '@/services/favoriteStocksService';
 import stocksService from '@/services/stocksService';
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 const route = useRoute();

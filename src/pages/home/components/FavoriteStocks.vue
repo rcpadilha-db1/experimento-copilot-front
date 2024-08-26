@@ -10,13 +10,14 @@
         v-for="item in favoriteStocks"
         :key="item.ticker"
         cols="4"
+        data-testid="favorite-stock"
       >
       <div>
         <div class="d-flex flex-column align-start px-4 py-2 rounded-sm border-thin">
           <b>{{ item.ticker }}</b>
           <span>{{ item.name  }}</span>
         </div>
-        <div class="">
+        <div>
           <v-btn @click="() => removeFavorite(item)">Remover</v-btn>
         </div>
       </div>

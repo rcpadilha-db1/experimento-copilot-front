@@ -31,9 +31,7 @@ class FavoriteStocks {
   remove(ticker: string) {
     try {
       const favorites = this.get();
-      console.log(favorites)
       const newArray = favorites.filter(item => item.ticker !== ticker);
-      console.log(newArray)
       localStorage.setItem(this.key, JSON.stringify(newArray));
     } catch {
       return;

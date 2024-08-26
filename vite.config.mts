@@ -11,6 +11,15 @@ import { fileURLToPath, URL } from 'node:url'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  test: {
+    globals: true,
+    environment: 'happy-dom',
+    server: {
+      deps: {
+        inline: ['vuetify'],
+      },
+    },
+  },
   plugins: [
     VueRouter(),
     Vue({
@@ -47,13 +56,5 @@ export default defineConfig({
       '.tsx',
       '.vue',
     ],
-  },
-  server: {
-    port: 3000,
-    proxy: {
-      'http://localhost:3000': {
-        target: 'https://api.stockdata.org/v1'
-      }
-    }
   },
 })
