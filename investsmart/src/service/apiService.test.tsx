@@ -1,62 +1,122 @@
 import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-import { requestObtainNews, ApiResponse } from './apiService';
+import { requestObtainNews, requestObtainStocksList, requestObtainStockSelected } from './apiService';
 
-describe('apiService', () => {
-  let mock: MockAdapter;
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-  beforeEach(() => {
-    mock = new MockAdapter(axios);
-  });
-
+describe('API Service', () => {
   afterEach(() => {
-    mock.reset();
+    jest.clearAllMocks();
   });
 
-  it('deve retornar os dados corretamente quando a API responder com sucesso', async () => {
-    const mockResponse: ApiResponse = {
-      meta: {
-        found: 100,
-        returned: 1,
-        limit: 10,
-        page: 1,
+  it('should fetch news data successfully', async () => {
+    const mockNewsData = [
+      {
+        uuid: '1',
+        title: 'Test News',
+        description: 'This is a test news',
+        keywords: 'test, news',
+        snippet: 'Test news snippet',
+        url: 'https://example.com/news/1',
+        image_url: 'https://example.com/image.jpg',
+        language: 'en',
+        published_at: '2024-09-01T00:00:00Z',
+        source: 'Example Source',
+        relevance_score: 10,
+        entities: [],
+        similar: [],
       },
-      data: [
-        {
-          uuid: '12345',
-          title: 'Sample News Title',
-          description: 'Sample description',
-          keywords: '',
-          snippet: 'Sample snippet',
-          url: 'https://example.com/news/12345',
-          image_url: 'https://example.com/news/12345.jpg',
-          language: 'en',
-          published_at: '2024-01-01T00:00:00Z',
-          source: 'example.com',
-          relevance_score: null,
-          entities: [],
-          similar: [],
-        },
-      ],
-    };
+    ];
 
-    mock.onGet(/\/news\/all/).reply(200, mockResponse);
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        meta: { found: 1, returned: 1, limit: 10, page: 1 },
+        data: mockNewsData,
+      },
+    });
 
-    const result = await requestObtainNews();
+    const data = await requestObtainNews();
 
-    expect(result).toEqual(mockResponse.data);
+    expect(data).toEqual(mockNewsData);
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      '/news/all?symbols=TSLA,AMZN,MSFT&filter_entities=true&language=en&api_token=UqI9xqwqVOpSz1mFrK490YrqXeqmr2wcL15aPasM'
+    );
   });
 
-  it('deve lançar um erro quando a API retornar um erro', async () => {
-    mock.onGet(/\/news\/all/).reply(500);
+  it('should fetch stocks list successfully', async () => {
+    const mockStocksData = [
+      {
+        symbol: 'TSLA',
+        name: 'Tesla, Inc.',
+        type: 'Equity',
+        industry: 'Automotive',
+        exchange: 'NASDAQ',
+        exchange_long: 'NASDAQ Stock Exchange',
+        mic_code: 'XNAS',
+        country: 'US',
+      },
+    ];
 
-    await expect(requestObtainNews()).rejects.toThrow('Request failed with status code 500');
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        meta: { found: 1, returned: 1, limit: 10, page: 1 },
+        data: mockStocksData,
+      },
+    });
+
+    const data = await requestObtainStocksList();
+
+    expect(data).toEqual(mockStocksData);
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      '/entity/search?search=tsla&api_token=UqI9xqwqVOpSz1mFrK490YrqXeqmr2wcL15aPasM'
+    );
   });
 
-  it('deve lançar um erro quando a resposta da API não estiver no formato esperado', async () => {
-    const badResponse = { unexpected_key: 'unexpected_value' };
-    mock.onGet(/\/news\/all/).reply(200, badResponse);
+  it('should fetch selected stock data successfully', async () => {
+    const mockStockSelectedData = [
+      {
+        ticker: 'AAPL',
+        name: 'Apple Inc.',
+        exchange_short: 'NASDAQ',
+        exchange_long: 'NASDAQ Stock Exchange',
+        mic_code: 'XNAS',
+        currency: 'USD',
+        price: 150,
+        day_high: 151,
+        day_low: 148,
+        day_open: 149,
+        _52_week_high: 180,
+        _52_week_low: 120,
+        market_cap: 2500000000,
+        previous_close_price: 149,
+        previous_close_price_time: '2024-09-01T00:00:00Z',
+        day_change: 1,
+        volume: 1000000,
+        is_extended_hours_price: false,
+        last_trade_time: '2024-09-01T00:00:00Z',
+      },
+    ];
 
-    await expect(requestObtainNews()).rejects.toThrow('Resposta da API não está no formato esperado.');
+    mockedAxios.get.mockResolvedValueOnce({
+      data: {
+        meta: { found: 1, returned: 1, limit: 10, page: 1 },
+        data: mockStockSelectedData,
+      },
+    });
+
+    const data = await requestObtainStockSelected();
+
+    expect(data).toEqual(mockStockSelectedData);
+    expect(mockedAxios.get).toHaveBeenCalledWith(
+      '/data/quote?symbols=AAPL,TSLA,MSFT&api_token=UqI9xqwqVOpSz1mFrK490YrqXeqmr2wcL15aPasM'
+    );
+  });
+
+  it('should handle API errors gracefully', async () => {
+    mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
+
+    await expect(requestObtainNews()).rejects.toThrow('API Error');
+    await expect(requestObtainStocksList()).rejects.toThrow('API Error');
+    await expect(requestObtainStockSelected()).rejects.toThrow('API Error');
   });
 });

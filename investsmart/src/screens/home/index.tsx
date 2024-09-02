@@ -3,11 +3,11 @@ import Header from '../../components/Header';
 import FavoriteItem from '../../components/FavoriteItem';
 import NewsItem from '../../components/NewsItem';
 import { useCallback, useEffect, useState } from 'react';
-import { requestObtainNews, Data } from '../../service/apiService';
+import { requestObtainNews, NewsDataResponse } from '../../service/apiService';
 import localStorageService, { ActionData } from '../../store/localStorageService';
 
 const Home = () => {
-  const [news, setNews] = useState<Data[]>([]);
+  const [news, setNews] = useState<NewsDataResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [action, setAction] = useState<ActionData | null>(null);

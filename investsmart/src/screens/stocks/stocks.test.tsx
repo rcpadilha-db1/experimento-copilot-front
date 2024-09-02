@@ -1,51 +1,69 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import { BrowserRouter } from 'react-router-dom';
 import Stocks from '.';
 
-describe('Stock Data Explorer', () => {
-  it('renders header with title and navigation links', () => {
-    render(<Stocks />);
-    const titleElement = screen.getByText(/Stock Data Explorer/i);
-    expect(titleElement).toBeInTheDocument();
+jest.mock('../../service/apiService', () => ({
+  requestObtainStocksList: jest.fn().mockResolvedValue([
+    { symbol: 'AAPL', name: 'Apple Inc.', type: 'Technology' },
+    { symbol: 'TSLA', name: 'Tesla, Inc.', type: 'Automotive' },
+    { symbol: 'AMZN', name: 'Amazon.com, Inc.', type: 'E-commerce' },
+  ]),
+}));
 
-    const homeLink = screen.getByText(/Home/i);
-    const acoesLink = screen.getByText(/Ações/i);
-    expect(homeLink).toBeInTheDocument();
-    expect(acoesLink).toBeInTheDocument();
+describe('Stocks Component', () => {
+  it('should render the stock table after fetching data', async () => {
+    render(
+      <BrowserRouter>
+        <Stocks />
+      </BrowserRouter>
+    );
+
+    const rows = await screen.findAllByRole('row');
+    expect(rows).toHaveLength(4);
   });
 
-  it('renders search bar with input and button', () => {
-    render(<Stocks />);
-    const inputElement = screen.getByPlaceholderText(/Pesquise por nome ou símbolo/i);
-    const buttonElement = screen.getByText(/Pesquisar/i);
-    expect(inputElement).toBeInTheDocument();
-    expect(buttonElement).toBeInTheDocument();
+  it('should filter stocks based on user input and search button click', async () => {
+    render(
+      <BrowserRouter>
+        <Stocks />
+      </BrowserRouter>
+    );
+
+    await screen.findAllByRole('row');
+
+    const searchInput = screen.getByPlaceholderText('Pesquise por nome ou símbolo');
+    fireEvent.change(searchInput, { target: { value: 'Apple' } });
+
+    const searchButton = screen.getByText('Pesquisar');
+    fireEvent.click(searchButton);
+
+    const filteredRows = await screen.findAllByRole('row');
+    expect(filteredRows).toHaveLength(2);
+    expect(screen.getByText('Apple Inc.')).toBeInTheDocument();
+    expect(screen.queryByText('Tesla, Inc.')).not.toBeInTheDocument();
   });
 
-  it('renders table with stocks', () => {
-    render(<Stocks />);
-    const symbolLinks = screen.getAllByText(/XPTO/i);
-    const nameCells = screen.getAllByText(/Ação XPTO/i);
-    const typeCells = screen.getAllByText(/Equity/i);
+  it('should display loading message while fetching data', () => {
+    render(
+      <BrowserRouter>
+        <Stocks />
+      </BrowserRouter>
+    );
 
-    expect(symbolLinks.length).toBe(5);
-    expect(nameCells.length).toBe(5);
-    expect(typeCells.length).toBe(5);
+    expect(screen.getByText('Carregando as ações...')).toBeInTheDocument();
   });
 
-  it('filters stocks based on query', () => {
-    render(<Stocks />);
-    const inputElement = screen.getByPlaceholderText(/Pesquise por nome ou símbolo/i);
+  it('should display an error message if fetching stocks fails', async () => {
+    jest.spyOn(require('../../service/apiService'), 'requestObtainStocksList').mockRejectedValueOnce(new Error('Erro ao buscar dados'));
 
-    // Pesquisar por "xpto"
-    fireEvent.change(inputElement, { target: { value: 'xpto' } });
-    let symbolLinks = screen.getAllByText(/XPTO/i);
-    expect(symbolLinks.length).toBe(5);
+    render(
+      <BrowserRouter>
+        <Stocks />
+      </BrowserRouter>
+    );
 
-    // Pesquisar por um texto inexistente
-    fireEvent.change(inputElement, { target: { value: 'inexistente' } });
-    symbolLinks = screen.queryAllByText(/XPTO/i);
-    expect(symbolLinks.length).toBe(0);
+    const errorMessage = await screen.findByText('Não foi possível carregar as ações.');
+    expect(errorMessage).toBeInTheDocument();
   });
 });
